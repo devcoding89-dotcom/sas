@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import LandingPage from '../components/LandingPage';
 import SidebarNav from '../components/SidebarNav';
 import AppHeader from '../components/AppHeader';
 import MobileNav from '../components/MobileNav';
@@ -18,6 +19,7 @@ import NotificationsView from '../components/NotificationsView';
 import { DocumentItem } from '../data/mockData';
 
 export default function Home() {
+  const [viewMode, setViewMode] = useState<'landing' | 'app'>('landing');
   const [activeTab, setActiveTab] = useState<
     'dashboard' | 'summary' | 'flashcards' | 'quiz' | 'planner' | 'community' | 'library' | 'messages' | 'notifications' | 'settings'
   >('dashboard');
@@ -27,6 +29,30 @@ export default function Home() {
   // Sidebar collapse and mobile drawer states
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      const params = new URLSearchParams(window.location.search);
+      if (hash === '#app' || params.get('view') === 'app' || params.get('app') === 'true') {
+        setViewMode('app');
+      }
+    }
+  }, []);
+
+  const handleEnterApp = () => {
+    setViewMode('app');
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleGoToLanding = () => {
+    setViewMode('landing');
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleTabChange = (t: string) => {
     setActiveTab(t as any);
@@ -55,6 +81,11 @@ export default function Home() {
     }
   };
 
+  // If user is on the Landing Page, render full landing experience first
+  if (viewMode === 'landing') {
+    return <LandingPage onEnterApp={handleEnterApp} />;
+  }
+
   return (
     <div className="saas-layout">
       {/* 1. Sleek Left Dark Sidebar Navigation (Collapsible + Auto-close on click) */}
@@ -65,6 +96,7 @@ export default function Home() {
         onToggleCollapse={() => setIsSidebarCollapsed(prev => !prev)}
         isMobileOpen={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
+        onGoToLanding={handleGoToLanding}
       />
 
       {/* 2. Main Workspace Area */}
@@ -76,6 +108,7 @@ export default function Home() {
           onNavigateToProfile={() => handleTabChange('settings')}
           onToggleSidebar={handleToggleSidebar}
           isSidebarCollapsed={isSidebarCollapsed}
+          onGoToLanding={handleGoToLanding}
         />
 
         {/* Content Container */}

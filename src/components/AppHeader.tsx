@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Search, Bell, Flame, UploadCloud, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Search, Bell, Flame, UploadCloud, Menu, PanelLeftClose, PanelLeftOpen, Globe } from 'lucide-react';
 import { CURRENT_STUDENT } from '../data/mockData';
 
 interface AppHeaderProps {
@@ -10,6 +10,7 @@ interface AppHeaderProps {
   onNavigateToProfile?: () => void;
   onToggleSidebar?: () => void;
   isSidebarCollapsed?: boolean;
+  onGoToLanding?: () => void;
 }
 
 export default function AppHeader({
@@ -17,7 +18,8 @@ export default function AppHeader({
   onNavigateToNotifications,
   onNavigateToProfile,
   onToggleSidebar,
-  isSidebarCollapsed
+  isSidebarCollapsed,
+  onGoToLanding
 }: AppHeaderProps) {
   return (
     <header style={{
@@ -27,22 +29,23 @@ export default function AppHeader({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '0 24px',
+      padding: '0 16px',
       position: 'sticky',
       top: 0,
       zIndex: 40,
       backdropFilter: 'blur(8px)',
       boxShadow: 'var(--shadow-xs)',
-      gap: 16
+      gap: 12
     }}>
       {/* Left Search & Toggle */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, maxWidth: 520 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
         {onToggleSidebar && (
           <button
             onClick={onToggleSidebar}
             className="btn btn-secondary"
-            style={{ padding: '8px 10px', borderRadius: 'var(--radius-sm)' }}
+            style={{ padding: '8px 10px', borderRadius: 'var(--radius-sm)', flexShrink: 0 }}
             title={isSidebarCollapsed ? "Expand Sidebar Navigation" : "Collapse Sidebar Navigation"}
+            aria-label="Toggle Navigation"
           >
             {isSidebarCollapsed ? (
               <PanelLeftOpen size={18} color="#65A30D" />
@@ -53,24 +56,25 @@ export default function AppHeader({
         )}
 
         {/* Global Search Input */}
-        <div style={{
+        <div className="header-search-wrap" style={{
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          width: '100%'
+          width: '100%',
+          maxWidth: 420
         }}>
-          <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: 14 }} />
+          <Search size={15} color="var(--text-muted)" style={{ position: 'absolute', left: 12 }} />
           <input
             type="text"
-            placeholder="Search for students, documents, or courses..."
+            placeholder="Search documents, courses..."
             style={{
               width: '100%',
-              padding: '9px 14px 9px 38px',
+              padding: '8px 12px 8px 34px',
               borderRadius: 'var(--radius-md)',
               background: 'var(--bg-elevated)',
               border: '1px solid var(--border-light)',
               color: 'var(--text-dark)',
-              fontSize: '0.86rem',
+              fontSize: '0.84rem',
               outline: 'none',
               transition: 'border-color 0.15s ease',
               fontFamily: 'inherit'
@@ -80,46 +84,61 @@ export default function AppHeader({
       </div>
 
       {/* Right Header Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+        {/* Website Landing Link */}
+        {onGoToLanding && (
+          <button
+            onClick={onGoToLanding}
+            className="btn btn-secondary"
+            style={{ padding: '6px 10px', fontSize: '0.78rem', gap: 5, borderRadius: 'var(--radius-sm)' }}
+            title="View Public Landing Page"
+          >
+            <Globe size={14} color="#65A30D" />
+            <span className="header-desktop-label" style={{ fontWeight: 600 }}>Website</span>
+          </button>
+        )}
+
         {/* Streak Pill */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 6,
-          padding: '5px 12px',
+          gap: 5,
+          padding: '5px 9px',
           borderRadius: 9999,
           background: '#FEF3C7',
           border: '1px solid #FCD34D',
-          fontSize: '0.8rem',
+          fontSize: '0.78rem',
           fontWeight: 700,
           color: '#92400E'
         }}>
-          <Flame size={15} fill="#F59E0B" color="#D97706" style={{ animation: 'floatGentle 2s ease-in-out infinite' }} />
-          <span>4 Days</span>
+          <Flame size={14} fill="#F59E0B" color="#D97706" style={{ animation: 'floatGentle 2s ease-in-out infinite' }} />
+          <span className="header-streak-text">4 Days</span>
         </div>
 
         {/* Upload Button */}
         <button
           className="btn btn-primary"
           onClick={onOpenUpload}
-          style={{ padding: '8px 16px', fontSize: '0.84rem' }}
+          style={{ padding: '7px 12px', fontSize: '0.82rem', gap: 6 }}
+          title="Upload PDF Document"
         >
           <UploadCloud size={16} />
-          <span>Upload PDF</span>
+          <span className="header-desktop-label">Upload</span>
         </button>
 
         {/* Notifications Bell */}
         <button
           onClick={onNavigateToNotifications}
           className="btn btn-secondary"
-          style={{ padding: '8px 10px', borderRadius: 'var(--radius-md)', position: 'relative' }}
+          style={{ padding: '7px 9px', borderRadius: 'var(--radius-md)', position: 'relative' }}
           title="Notifications"
+          aria-label="Notifications"
         >
           <Bell size={16} color="var(--text-secondary)" />
           <span style={{
             position: 'absolute',
-            top: 6,
-            right: 6,
+            top: 5,
+            right: 5,
             width: 7,
             height: 7,
             borderRadius: '50%',
@@ -133,17 +152,18 @@ export default function AppHeader({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
-            padding: '4px 10px 4px 4px',
+            gap: 8,
+            padding: '3px 8px 3px 3px',
             borderRadius: 9999,
             background: 'var(--bg-elevated)',
             border: '1px solid var(--border-light)',
             cursor: 'pointer'
           }}
+          title="Profile & Settings"
         >
           <div style={{
-            width: 32,
-            height: 32,
+            width: 28,
+            height: 28,
             borderRadius: '50%',
             background: '#65A30D',
             color: '#FFFFFF',
@@ -151,7 +171,7 @@ export default function AppHeader({
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 800,
-            fontSize: '0.78rem',
+            fontSize: '0.75rem',
             overflow: 'hidden'
           }}>
             {CURRENT_STUDENT.avatarUrl ? (
@@ -159,12 +179,9 @@ export default function AppHeader({
             ) : 'CO'}
           </div>
 
-          <div style={{ lineHeight: 1.15 }}>
-            <span style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-dark)' }}>
+          <div className="header-user-name" style={{ lineHeight: 1.15 }}>
+            <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-dark)' }}>
               {CURRENT_STUDENT.name.split(' ')[0]}
-            </span>
-            <span style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>
-              {CURRENT_STUDENT.level}
             </span>
           </div>
         </div>

@@ -184,11 +184,7 @@ export default function DashboardTab({
       </div>
 
       {/* 2. Quick Actions 5-Card Grid (exact from Figma) */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-        gap: 14
-      }}>
+      <div className="dashboard-quick-actions">
         {quickActions.map(action => {
           const Icon = action.icon;
           return (
@@ -197,7 +193,7 @@ export default function DashboardTab({
               onClick={action.onClick}
               className="card"
               style={{
-                padding: '20px 18px',
+                padding: '18px 16px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
@@ -236,26 +232,16 @@ export default function DashboardTab({
       </div>
 
       {/* 3. Main 2-Column Section (Progress & Continue vs Upcoming & Activity) */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 340px',
-        gap: 24,
-        alignItems: 'start'
-      }}>
+      <div className="dashboard-main-grid">
         {/* LEFT MAIN COLUMN */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 24, minWidth: 0 }}>
           {/* Your Progress Row (Figma: 12 Documents | 5 Study Packs | 3 Quizzes | 8 Study Sessions) */}
-          <div className="card" style={{ padding: '20px 24px' }}>
+          <div className="card" style={{ padding: '20px 20px' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 16 }}>
               Your Progress
             </h3>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: 12,
-              textAlign: 'center'
-            }}>
+            <div className="dashboard-progress-grid">
               <div style={{
                 padding: '12px 8px',
                 borderRadius: 'var(--radius-md)',

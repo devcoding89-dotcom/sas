@@ -21,6 +21,7 @@ import {
   Sparkles,
   ExternalLink,
   ChevronRight,
+  ChevronLeft,
   X
 } from 'lucide-react';
 import {
@@ -47,6 +48,7 @@ export default function MessagesView({
   const [showProfilePanel, setShowProfilePanel] = useState(false);
   const [profileTab, setProfileTab] = useState<'docs' | 'about' | 'friends'>('docs');
   const [isFriend, setIsFriend] = useState(true);
+  const [mobileShowChat, setMobileShowChat] = useState(false);
 
   const activePeer = MOCK_STUDENTS.find(s => s.id === selectedPeerId) || MOCK_STUDENTS[0];
   const messages = chats[selectedPeerId] || [];
@@ -110,7 +112,7 @@ export default function MessagesView({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       {/* Three-Column or Two-Column Messenger Stage */}
-      <div style={{
+      <div className="messages-stage-grid" style={{
         display: 'grid',
         gridTemplateColumns: showProfilePanel
           ? '290px 1fr 340px'
@@ -127,7 +129,7 @@ export default function MessagesView({
         {/* ========================================================
             COLUMN 1: CONVERSATIONS LIST
             ======================================================== */}
-        <div style={{
+        <div className={`messages-col-list ${mobileShowChat ? 'mobile-hidden' : ''}`} style={{
           borderRight: '1px solid var(--border-light)',
           background: 'var(--bg-card)',
           display: 'flex',
@@ -183,7 +185,10 @@ export default function MessagesView({
               return (
                 <div
                   key={peer.id}
-                  onClick={() => setSelectedPeerId(peer.id)}
+                  onClick={() => {
+                    setSelectedPeerId(peer.id);
+                    setMobileShowChat(true);
+                  }}
                   style={{
                     padding: '14px 18px',
                     display: 'flex',
@@ -293,7 +298,7 @@ export default function MessagesView({
         {/* ========================================================
             COLUMN 2: ACTIVE CHAT CONVERSATION
             ======================================================== */}
-        <div style={{
+        <div className={`messages-col-chat ${!mobileShowChat ? 'mobile-hidden' : ''}`} style={{
           display: 'flex',
           flexDirection: 'column',
           background: 'var(--bg-body)',
@@ -310,7 +315,16 @@ export default function MessagesView({
             justifyContent: 'space-between',
             gap: 12
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              {/* Mobile Back Button to list */}
+              <button
+                onClick={() => setMobileShowChat(false)}
+                className="btn btn-secondary messages-back-btn"
+                style={{ padding: '6px 8px', borderRadius: 'var(--radius-sm)' }}
+                title="Back to conversations"
+              >
+                <ChevronLeft size={18} color="var(--text-secondary)" />
+              </button>
               <div style={{ position: 'relative' }}>
                 <div style={{
                   width: 42,

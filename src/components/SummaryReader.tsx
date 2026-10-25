@@ -141,7 +141,7 @@ export default function SummaryReader({ onGoToCards, onGoToQuiz }: SummaryReader
 
       {/* Tab 1: OVERVIEW (Figma exact match) */}
       {workspaceTab === 'overview' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 24, alignItems: 'start' }}>
+        <div className="summary-reader-grid">
           {/* Left Column: Key Concepts */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div className="card" style={{ padding: '24px' }}>

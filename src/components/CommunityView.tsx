@@ -176,11 +176,7 @@ export default function CommunityView({ onOpenChat, onSelectCourseStudy }: Commu
       </div>
 
       {/* Student Cards Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))',
-        gap: 18
-      }}>
+      <div className="community-students-grid">
         {filteredStudents.map(peer => {
           const isConnected = peer.connectionStatus === 'connected';
           const isPending = peer.connectionStatus === 'pending';

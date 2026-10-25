@@ -15,7 +15,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  X
+  X,
+  Globe
 } from 'lucide-react';
 import { CURRENT_STUDENT } from '../data/mockData';
 
@@ -27,6 +28,7 @@ interface SidebarNavProps {
   onToggleCollapse?: () => void;
   isMobileOpen?: boolean;
   onCloseMobile?: () => void;
+  onGoToLanding?: () => void;
 }
 
 export default function SidebarNav({
@@ -36,7 +38,8 @@ export default function SidebarNav({
   isCollapsed = false,
   onToggleCollapse,
   isMobileOpen = false,
-  onCloseMobile
+  onCloseMobile,
+  onGoToLanding
 }: SidebarNavProps) {
   const mainNavItems = [
     { id: 'dashboard', label: 'Home', icon: Home },
@@ -321,6 +324,37 @@ export default function SidebarNav({
               </button>
             );
           })}
+
+          {/* Website / Landing Page Link */}
+          {onGoToLanding && (
+            <button
+              onClick={() => {
+                if (onCloseMobile) onCloseMobile();
+                onGoToLanding();
+              }}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: isCollapsed ? 'center' : 'flex-start',
+                padding: isCollapsed ? '9px 0' : '9px 12px',
+                borderRadius: 8,
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                color: '#6EE7B7',
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(132, 204, 22, 0.15)',
+                transition: 'all 0.15s ease',
+                cursor: 'pointer',
+                marginTop: 6,
+                gap: 12
+              }}
+              title={isCollapsed ? "Back to Landing Page" : undefined}
+            >
+              <Globe size={18} color="#84CC16" />
+              {!isCollapsed && <span>Landing Page</span>}
+            </button>
+          )}
 
           {/* User Pill */}
           <div

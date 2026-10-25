@@ -501,3 +501,189 @@ button {
 .animate-pulse-glow {
   animation: pulseGlow 2.5s infinite;
 }
+
+/* ==========================================================================
+   RESPONSIVE DESIGN UTILITIES & LANDING PAGE MOBILE STYLES
+   ========================================================================== */
+
+/* Overflow & Viewport Safety */
+html, body, #__next, .saas-layout, .saas-main-area {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Landing Page Responsive Classes */
+.landing-mobile-toggle {
+  display: none;
+}
+
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.landing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.landing-footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+
+@media (max-width: 900px) {
+  .landing-features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-nav-links {
+    display: none !important;
+  }
+  .landing-mobile-toggle {
+    display: flex !important;
+  }
+  .landing-footer-grid {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .landing-steps > div {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 20px 18px !important;
+    gap: 16px !important;
+  }
+}
+
+/* Workspace Dashboard Grids */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.dashboard-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-progress-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .dashboard-quick-actions {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .dashboard-quick-actions {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Summary Reader Grids */
+.summary-reader-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .summary-reader-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+/* App Header Responsive */
+@media (max-width: 768px) {
+  .header-desktop-label {
+    display: none !important;
+  }
+  .header-search-wrap {
+    max-width: 180px !important;
+  }
+  .header-user-name {
+    display: none !important;
+  }
+  .header-streak-text {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-search-wrap {
+    max-width: 140px !important;
+  }
+}
+
+/* Community Student Grid */
+.community-students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 640px) {
+  .community-students-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+
+/* Messages Responsive Styles */
+.messages-back-btn {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .messages-stage-grid {
+    grid-template-columns: 1fr !important;
+    min-height: calc(100vh - 160px) !important;
+  }
+  .messages-back-btn {
+    display: flex !important;
+  }
+  .messages-col-list.mobile-hidden {
+    display: none !important;
+  }
+  .messages-col-chat.mobile-hidden {
+    display: none !important;
+  }
+}
+
+
